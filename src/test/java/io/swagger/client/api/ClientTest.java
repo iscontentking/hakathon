@@ -10,8 +10,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class ClientTest {
 
@@ -26,32 +24,14 @@ public class ClientTest {
     public void test() {
 
 
-        try {
-            boardAirpaneControllerApi.register(AIRPLINE_ID, BOARD_ID);
-            boardControllerApi.start(AIRPLINE_ID, BOARD_ID);
-
-//            System.out.println(new BoardControllerApi().getScore(AIRPLINE_ID, BOARD_ID));
-
-
-//            CurrentPositionDTO we = boardAirplaneControllerApi.moveAirplane(AIRPLINE_ID, BOARD_ID, "NE");
-
-//            System.out.println(boardControllerApi.getDetails(AIRPLINE_ID, BOARD_ID));
-
-            while (true) {
-                try {
-                    System.out.println(boardControllerApi.getScore(AIRPLINE_ID, BOARD_ID));
-                    move();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        while (true) {
+            try {
+                System.out.println(boardControllerApi.getScore(AIRPLINE_ID, BOARD_ID));
+                move();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-
-        } catch (ApiException e) {
-            e.printStackTrace();
-            System.out.println(e.getResponseBody());
         }
-//        System.out.println(we);
 
     }
 
