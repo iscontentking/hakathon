@@ -37,7 +37,7 @@ public class ClientTest {
 
     private void move() throws ApiException, InterruptedException {
         BoardDetailsDTO details = boardControllerApi.getDetails(AIRPLINE_ID, BOARD_ID);
-        AirplaneDTO currentAirplane = getCurrentAirplane(boardControllerApi, details);
+        AirplaneDTO currentAirplane = getCurrentAirplane(details);
 
 
         System.out.println("----------------------------------------------");
@@ -125,13 +125,12 @@ public class ClientTest {
     }
 
     private double distance(PassengerDTO passengerDTO, AirplaneDTO karakan) {
-        int x = (passengerDTO.getX() - karakan.getX()) * (passengerDTO.getX() - karakan.getX());
-        int y = (passengerDTO.getY() - karakan.getY()) * (passengerDTO.getY() - karakan.getY());
-
-        return Math.sqrt(x + y);
+        int x = Math.abs(passengerDTO.getX() - karakan.getX());
+        int y = Math.abs(passengerDTO.getY() - karakan.getY());
+        return Math.max(x, y);
     }
 
-    private AirplaneDTO getCurrentAirplane(BoardControllerApi boardControllerApi, BoardDetailsDTO detailsDTO) throws ApiException {
+    private AirplaneDTO getCurrentAirplane(BoardDetailsDTO detailsDTO) throws ApiException {
         return detailsDTO.getAirplanes()
                 .stream()
                 .filter(z -> z.getName().equals("karakan"))
