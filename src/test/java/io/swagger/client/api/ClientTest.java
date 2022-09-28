@@ -3,7 +3,6 @@ package io.swagger.client.api;
 import io.swagger.client.ApiException;
 import io.swagger.client.model.AirplaneDTO;
 import io.swagger.client.model.BoardDetailsDTO;
-import io.swagger.client.model.CurrentPositionDTO;
 import io.swagger.client.model.PassengerDTO;
 import org.junit.Test;
 
@@ -18,7 +17,6 @@ public class ClientTest {
 
     static BoardAirplaneControllerApi boardAirpaneControllerApi = new BoardAirplaneControllerApi();
     static BoardControllerApi boardControllerApi = new BoardControllerApi();
-
 
     @Test
     public void test() {
@@ -35,7 +33,7 @@ public class ClientTest {
 
     }
 
-    private void move() throws ApiException, InterruptedException {
+    private void move() throws ApiException {
         BoardDetailsDTO details = boardControllerApi.getDetails(AIRPLINE_ID, BOARD_ID);
         AirplaneDTO currentAirplane = getCurrentAirplane(details);
 
@@ -65,18 +63,7 @@ public class ClientTest {
         });
 //        EXECUTOR_SERVICE.shutdown();
 
-//        String direction = getDirection(currentAirplane, nearestPassenger);
-
-
-//        CurrentPositionDTO newPosition = boardAirpaneControllerApi.moveAirplane(AIRPLINE_ID, BOARD_ID, direction);
-
-//        if (isOnPassenger(nearestPassenger, newPosition)) {
         boardAirpaneControllerApi.takePassenger(AIRPLINE_ID, BOARD_ID, nearestPassenger.getId());
-//        }
-    }
-
-    private boolean isOnPassenger(PassengerDTO nearestPassenger, CurrentPositionDTO newPosition) {
-        return nearestPassenger.getY().equals(newPosition.getY()) && nearestPassenger.getX().equals(newPosition.getX());
     }
 
     private String getDirection(AirplaneDTO currentAirplane, PassengerDTO nearestPassenger) {
@@ -102,8 +89,7 @@ public class ClientTest {
             yLetter = "N";
         }
 
-        String direction = yLetter + xLetter;
-        return direction;
+        return yLetter + xLetter;
     }
 
     private Optional<PassengerDTO> getNearestPassenger(AirplaneDTO karakan, BoardDetailsDTO details) throws ApiException {
@@ -124,13 +110,13 @@ public class ClientTest {
 
     }
 
-    private double distance(PassengerDTO passengerDTO, AirplaneDTO karakan) {
-        int x = Math.abs(passengerDTO.getX() - karakan.getX());
-        int y = Math.abs(passengerDTO.getY() - karakan.getY());
+    private double distance(PassengerDTO passengerDTO, AirplaneDTO airplane) {
+        int x = Math.abs(passengerDTO.getX() - airplane.getX());
+        int y = Math.abs(passengerDTO.getY() - airplane.getY());
         return Math.max(x, y);
     }
 
-    private AirplaneDTO getCurrentAirplane(BoardDetailsDTO detailsDTO) throws ApiException {
+    private AirplaneDTO getCurrentAirplane(BoardDetailsDTO detailsDTO) {
         return detailsDTO.getAirplanes()
                 .stream()
                 .filter(z -> z.getName().equals("karakan"))
