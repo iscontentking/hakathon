@@ -14,7 +14,7 @@ public class Client2Test {
 
 
     @Test
-    public void registerBoard() throws ApiException {
+    public void startBoard() throws ApiException {
         boardControllerApi.start(AIRPLINE_ID, BOARD_ID);
 
     }
