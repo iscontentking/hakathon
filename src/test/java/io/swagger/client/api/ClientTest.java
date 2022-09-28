@@ -12,8 +12,9 @@ import java.util.UUID;
 
 public class ClientTest {
 
-    public static final UUID AIRPLINE_ID = UUID.fromString("b1117889-796f-4230-bb32-bcc3a66a1dd2");
+    public static final UUID AIRPLANE_ID = UUID.fromString("b1117889-796f-4230-bb32-bcc3a66a1dd2");
     public static final UUID BOARD_ID = UUID.fromString("00400291-a307-4d75-b3d7-f66784d977cf");
+    public static final String AIRPLANE_NAME = "karakan";
 
     static BoardAirplaneControllerApi boardAirpaneControllerApi = new BoardAirplaneControllerApi();
     static BoardControllerApi boardControllerApi = new BoardControllerApi();
@@ -24,7 +25,7 @@ public class ClientTest {
 
         while (true) {
             try {
-                System.out.println(boardControllerApi.getScore(AIRPLINE_ID, BOARD_ID));
+                System.out.println(boardControllerApi.getScore(AIRPLANE_ID, BOARD_ID));
                 move();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -34,7 +35,7 @@ public class ClientTest {
     }
 
     private void move() throws ApiException {
-        BoardDetailsDTO details = boardControllerApi.getDetails(AIRPLINE_ID, BOARD_ID);
+        BoardDetailsDTO details = boardControllerApi.getDetails(AIRPLANE_ID, BOARD_ID);
         AirplaneDTO currentAirplane = getCurrentAirplane(details);
 
 
@@ -55,7 +56,7 @@ public class ClientTest {
         directions.forEach(dir -> {
 //            EXECUTOR_SERVICE.submit(() -> {
                 try {
-                    boardAirpaneControllerApi.moveAirplane(AIRPLINE_ID, BOARD_ID, dir);
+                    boardAirpaneControllerApi.moveAirplane(AIRPLANE_ID, BOARD_ID, dir);
                 } catch (ApiException e) {
                     e.printStackTrace();
                 }
@@ -63,7 +64,7 @@ public class ClientTest {
         });
 //        EXECUTOR_SERVICE.shutdown();
 
-        boardAirpaneControllerApi.takePassenger(AIRPLINE_ID, BOARD_ID, nearestPassenger.getId());
+        boardAirpaneControllerApi.takePassenger(AIRPLANE_ID, BOARD_ID, nearestPassenger.getId());
     }
 
     private String getDirection(AirplaneDTO currentAirplane, PassengerDTO nearestPassenger) {
@@ -119,7 +120,7 @@ public class ClientTest {
     private AirplaneDTO getCurrentAirplane(BoardDetailsDTO detailsDTO) {
         return detailsDTO.getAirplanes()
                 .stream()
-                .filter(z -> z.getName().equals("karakan"))
+                .filter(z -> z.getName().equals(AIRPLANE_NAME))
                 .findFirst().get();
     }
 
