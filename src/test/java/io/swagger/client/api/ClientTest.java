@@ -13,8 +13,8 @@ import java.util.UUID;
 
 public class ClientTest {
 
-    final UUID AIRPLINE_ID = UUID.fromString("b1117889-796f-4230-bb32-bcc3a66a1dd2");
-    final UUID BOARD_ID = UUID.fromString("adc41438-713f-4d11-b8f8-ed4f650e928d");
+    public static final UUID AIRPLINE_ID = UUID.fromString("b1117889-796f-4230-bb32-bcc3a66a1dd2");
+    public static final UUID BOARD_ID = UUID.fromString("00400291-a307-4d75-b3d7-f66784d977cf");
 
     static BoardAirplaneControllerApi boardAirpaneControllerApi = new BoardAirplaneControllerApi();
     static BoardControllerApi boardControllerApi = new BoardControllerApi();
